@@ -6,6 +6,8 @@ import { auth } from '../firebase/config'
 // Probando
 import Login from "../screens/login";
 import Register from "../screens/register";
+import Home from "../screens/home";
+import NewPost from "../screens/newPost"
 
 const Drawer = createDrawerNavigator()
 
@@ -37,11 +39,17 @@ class Menu extends Component{
     render(){
         return(
             <NavigationContainer>
+            {this.state.logIn ? 
                 <Drawer.Navigator>
-                    {this.state.logIn}
-                    <Drawer.Screen name="Login" component={() => <Login  login={(email, passwoard) => this.login(email, passwoard)} />}/>
-                    <Drawer.Screen name="Register" component={() => <Register register={(email, passwoard) => this.register(email, passwoard)}/>} />
+                    <Drawer.Screen name="Inicio" component={() => <Home />}/>
+                    <Drawer.Screen name="Crear Posteo" component={() => <NewPost />}/>
                 </Drawer.Navigator>
+                :
+                <Drawer.Navigator>
+                    <Drawer.Screen name="Iniciar sesion" component={() => <Login  login={(email, passwoard) => this.login(email, passwoard)} />}/>
+                    <Drawer.Screen name="Registro" component={() => <Register register={(email, passwoard) => this.register(email, passwoard)}/>} />
+                </Drawer.Navigator>
+            }
             </NavigationContainer>
         )
     }
