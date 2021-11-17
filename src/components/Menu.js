@@ -8,20 +8,22 @@ import Login from "../screens/login";
 import Register from "../screens/register";
 import Home from "../screens/home";
 import NewPost from "../screens/newPost"
+import MyProfile from "../screens/myProfile"
 
 const Drawer = createDrawerNavigator()
 
 class Menu extends Component{
     constructor(){
         super()
-        this.state ={
+        this.state = {
             logIn: false
         }
     }
     register(email, passwoard, username){
         auth.createUserWithEmailAndPassword(email, passwoard)
         .then(() => {
-            alert('Te has registrado correctamente, ahora inicia session')
+            
+            alert('Te has registrado correctamente, ahora inicia sesión')
         })
         .catch(error => {
             alert(error)
@@ -33,9 +35,21 @@ class Menu extends Component{
             this.setState({
                 logIn: true
             })
-            alert('Iniciaste session correctamente')
+            alert('Iniciaste sesión correctamente')
         })
     }
+
+    logout(){
+        auth.signOut()
+            .then( () => {
+                this.setState({
+                    logIn: false,
+                })
+            })
+            .catch()
+        
+    }
+
     render(){
         return(
             <NavigationContainer>
@@ -43,17 +57,21 @@ class Menu extends Component{
                 <Drawer.Navigator>
                     <Drawer.Screen name="Inicio" component={() => <Home />}/>
                     <Drawer.Screen name="Crear Posteo" component={() => <NewPost />}/>
+                    <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()}/>}/>
                 </Drawer.Navigator>
                 :
                 <Drawer.Navigator>
-                    <Drawer.Screen name="Iniciar sesion" component={() => <Login  login={(email, passwoard) => this.login(email, passwoard)} />}/>
+                    <Drawer.Screen name="Iniciar sesión" component={() => <Login  login={(email, passwoard) => this.login(email, passwoard)} />}/>
                     <Drawer.Screen name="Registro" component={() => <Register register={(email, passwoard) => this.register(email, passwoard)}/>} />
                 </Drawer.Navigator>
             }
             </NavigationContainer>
         )
     }
+
 }  
+
+
 
 
 export default Menu

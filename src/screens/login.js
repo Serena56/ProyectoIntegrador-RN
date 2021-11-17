@@ -15,7 +15,7 @@ class Login extends Component{
         super()
         this.state ={
             email: '',
-            ussername: '',
+            username: '',
             passwoard: ''
         }
     }
