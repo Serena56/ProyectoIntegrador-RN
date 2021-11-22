@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { auth } from '../firebase/config'
+import { auth } from '../firebase/Config'
 
 // Probando
 import Login from "../screens/login";
