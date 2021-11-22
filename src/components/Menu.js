@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { auth } from '../firebase/Config'
+import { auth, db } from '../firebase/Config'
 
 // Probando
 import Login from "../screens/login";
@@ -19,6 +19,27 @@ class Menu extends Component{
             logIn: false
         }
     }
+
+    componentDidMount(){
+        db.collection('posts').onSnapshot(
+            docs => {    
+                let posts = [];
+                docs.forEach( doc => {
+                    posts.push({
+                    id: doc.id,
+                    data: doc.data()
+                }) 
+            this.setState({
+                posteos: posts,
+                loading: false
+            }) 
+            })
+            }),
+            auth.onAuthStateChanged(user => {
+                console.log(user)
+            })
+    }
+
     register(email, passwoard, username){
         auth.createUserWithEmailAndPassword(email, passwoard)
         .then(() => {
@@ -55,7 +76,7 @@ class Menu extends Component{
             <NavigationContainer>
             {this.state.logIn ? 
                 <Drawer.Navigator>
-                    <Drawer.Screen name="Inicio" component={() => <Home />}/>
+                    <Drawer.Screen name="Inicio" component={() => <Home posteos={this.state.posteos}/>}/>
                     <Drawer.Screen name="Crear Posteo" component={() => <NewPost />}/>
                     <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()}/>}/>
                 </Drawer.Navigator>
