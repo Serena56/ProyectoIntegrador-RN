@@ -1,16 +1,44 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, FlatList} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { db, auth } from '../firebase/Config';
+import firebase from "firebase";
 
 class Post extends React.Component {
     constructor(){
         super();
         this.state = {
-            
+            likes: 0,
+            myLike: false
         }
     }
 
+    componentDidMount(){
+       this.setState({
+           likes: this.props.likes.length,
+           myLike: this.props.likes.includes(auth.currentUser.email)
+       })
+       
+    }
+
+    likear(){
+        db.collection('posts').doc(this.props.dataId).update({
+            likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+        })
+        .then(()=> {
+            console.log('likeando')
+            this.setState({
+            myLike: true,
+            likes: this.props.likes.length 
+            })
+        })
+        .catch(e=> console.log(e))
+    }
+
     render() {
+        console.log(this.props.likes)
         return(
+            
             <View style={styles.contenedorMadre}>
             
 
@@ -21,7 +49,9 @@ class Post extends React.Component {
                     
                     <View style={styles.infoPost}>
                     <Text>{this.props.owner}: </Text>
-                    {console.log(this.props)}
+
+                    
+
                     <View style={styles.setRow}>
                         <Text style={styles.textPost}>{this.props.description}</Text> 
                         <Text style={styles.createdAt}>{this.props.createdAt.toString()}</Text>
@@ -34,7 +64,18 @@ class Post extends React.Component {
                                 keyExtractor={ item => item.toString() }
                                 renderItem={ ({item}) => <Text>{item}</Text>}
                                 />  
-                            <Text>Likes: {this.props.likes}</Text>
+                            <Text>Likes: {this.state.likes}</Text>
+                            {
+                                this.state.myLike ?
+
+                                <TouchableOpacity onPress={()=> this.unlike()}>
+                                <Text>Deslikear</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={()=> this.likear()}>
+                                <Text>Me Gusta</Text>
+                            </TouchableOpacity>
+                            }
                        </View>
                     </View>
                     
@@ -50,7 +91,7 @@ class Post extends React.Component {
 
 const styles = StyleSheet.create({
     contenedorMadre: {
-        backgroundColor: '#d6eaff'
+        backgroundColor: '#d6eaff',
     },
     contenedor: {
         marginTop: 25,
@@ -69,12 +110,6 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
         justifyContent: 'center',
-        
-    },
-    imagePost: {
-        flex: 1,
-        height: 400,
-        width: '100%',
         
     },
     textPost: {

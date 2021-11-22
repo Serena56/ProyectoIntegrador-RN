@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { auth, db } from '../firebase/Config';
+import { auth } from '../firebase/Config';
 import { Camera } from 'expo-camera';
 
 // Probando
@@ -18,28 +18,8 @@ class Menu extends Component{
         super()
         this.state = {
             logIn: false,
-            perimission: false
-        }
-    }
-
-    componentDidMount(){
-        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
-            docs => {    
-                let posts = [];
-                docs.forEach( doc => {
-                    posts.push({
-                    id: doc.id,
-                    data: doc.data()
-                }) 
-            this.setState({
-                posteos: posts,
-                loading: false
-            }) 
-            })
-            }),
-            auth.onAuthStateChanged(user => {
-                console.log(user)
-            })
+            perimission: false,
+            }
     }
 
     register(email, passwoard, username){
@@ -78,7 +58,7 @@ class Menu extends Component{
             <NavigationContainer>
             {this.state.logIn ? 
                 <Drawer.Navigator>
-                    <Drawer.Screen name="Inicio" component={() => <Home posteos={this.state.posteos}/>}/>
+                    <Drawer.Screen name="Inicio" component={() => <Home posteos={this.state.posteos} />}/>
                     <Drawer.Screen name="Crear Posteo" component={() => <NewPost navigation={Drawer} />}/>
                     <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()}/>}/>
                 </Drawer.Navigator>
