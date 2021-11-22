@@ -11,7 +11,12 @@ const Home = (props) => {
              <FlatList 
                 data={props.posteos}
                 keyExtractor={ item => item.id.toString() }
-                renderItem={ ({item}) => <Post description={item.data.description} owner={item.data.owner} createdAt={item.data.createdAt} comments={item.data.comments} likes={item.data.likes} />}
+                renderItem={ ({item}) => <Post 
+                description={item.data.description} 
+                owner={item.data.owner} createdAt={item.data.createdAt} 
+                comments={item.data.comments} likes={item.data.likes} 
+                imagen={item.data.photo}    
+                />}
             />   
             </View>
 
@@ -22,7 +27,7 @@ const Home = (props) => {
 const styles = StyleSheet.create({
     flatlist: {
     width: '100%',
-    flex: 1
+    flex: 1,
     },
 })
 

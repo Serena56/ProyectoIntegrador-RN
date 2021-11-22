@@ -12,9 +12,11 @@ class Post extends React.Component {
     render() {
         return(
             <View style={styles.contenedorMadre}>
+            
 
             <View style={styles.contenedor}>
-                
+                <Image source={this.props.imagen} style={styles.imgPost}/>
+
                 <View style={styles.contenedorPost}>
                     
                     <View style={styles.infoPost}>
@@ -97,6 +99,11 @@ const styles = StyleSheet.create({
     },
     commentsTextTitulo: {
         fontWeight: 'bold'
+    },
+    imgPost: {
+        flex: 1,
+        height: 300,
+        border: '1px solid black'
     }
 })
 

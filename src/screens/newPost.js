@@ -1,6 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, TextInput, StyleSheet} from 'react-native';
 import { db, auth } from '../firebase/Config';
+import MyCamera from '../components/MyCamera';
+import { Camera } from 'expo-camera';
+
 
 
 class newPost extends React.Component {
@@ -9,6 +12,8 @@ class newPost extends React.Component {
         this.state = {
             post: '',
             description: '',
+            showCamera: true,
+            url: ''
         }
     }
 
@@ -19,15 +24,30 @@ class newPost extends React.Component {
             createdAt: Date.now(),
             likes: [],
             comments: [],
+            photo: this.state.url
             })
-            .then()
+            .then(
+              //  this.props.drawerProps.navigation.navigate('Home')
+              //falta redireccionar a home
+            )
             .catch( e => console.log(e))
+    }
+
+    onImageUpload(url){
+        this.setState({
+            showCamera: false,
+            url: url
+        })
     }
 
     render(){
         return(
+            <>
+            {
+                this.state.showCamera ?
+                <MyCamera onImageUpload={(url)=> this.onImageUpload(url)}/>
+                :
             <View style={styles.form}>
-                
                 <Text>Postea</Text>
                 <TextInput style={styles.field}
                 keyboardType='default'
@@ -38,6 +58,8 @@ class newPost extends React.Component {
                 </TouchableOpacity>    
 
             </View>
+            }
+            </>
         )
     }
 }

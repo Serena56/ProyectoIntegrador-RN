@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { auth, db } from '../firebase/Config'
+import { auth, db } from '../firebase/Config';
+import { Camera } from 'expo-camera';
 
 // Probando
 import Login from "../screens/login";
@@ -16,7 +17,8 @@ class Menu extends Component{
     constructor(){
         super()
         this.state = {
-            logIn: false
+            logIn: false,
+            perimission: false
         }
     }
 
@@ -77,7 +79,7 @@ class Menu extends Component{
             {this.state.logIn ? 
                 <Drawer.Navigator>
                     <Drawer.Screen name="Inicio" component={() => <Home posteos={this.state.posteos}/>}/>
-                    <Drawer.Screen name="Crear Posteo" component={() => <NewPost />}/>
+                    <Drawer.Screen name="Crear Posteo" component={() => <NewPost navigation={Drawer} />}/>
                     <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()}/>}/>
                 </Drawer.Navigator>
                 :
