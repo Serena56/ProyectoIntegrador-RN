@@ -26,11 +26,11 @@ class Post extends React.Component {
             likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
         })
         .then(()=> {
-            console.log('likeando')
             this.setState({
             myLike: true,
             likes: this.props.likes.length 
-            })
+            }),
+            ()=>console.log(this.props.likes)
         })
         .catch(e=> console.log(e))
     }
@@ -105,19 +105,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         width: '90%',
-        marginTop: 12,
+        marginTop: 32,
         marginBottom: 12,
         marginLeft: 'auto',
         marginRight: 'auto',
         justifyContent: 'center',
+        height: '220px'
         
     },
     textPost: {
-        marginTop: 5,
+        marginTop: 15,
         alignItems: 'flex-start'
     },
     infoPost: {
-
+        height: '220px'
     },
     createdAt: {
         alignItems: 'flex-end',
