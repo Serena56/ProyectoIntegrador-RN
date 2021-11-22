@@ -35,6 +35,20 @@ class Post extends React.Component {
         .catch(e=> console.log(e))
     }
 
+    unlike(){
+        db.collection('posts').doc(this.props.dataId).update({
+            likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+        })
+        .then(()=> {
+            this.setState({
+            myLike: false,
+            likes: this.props.likes.length 
+            }),
+            ()=>console.log(this.props.likes)
+        })
+        .catch(e=> console.log(e))
+    }
+
     render() {
         console.log(this.props.likes)
         return(
