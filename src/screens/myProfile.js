@@ -18,7 +18,7 @@ class MyProfile extends Component{
             <Text>Mi Perfil</Text>
     
             <View>
-              <Text>Nombre: </Text>
+              <Text>Nombre: {auth.currentUser.displayName}</Text>
               <Text>Mail: {auth.currentUser.email}</Text>
               <Text>Último inicio de sesión: {auth.currentUser.metadata.lastSignInTime}</Text>
             </View>

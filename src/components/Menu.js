@@ -24,9 +24,15 @@ class Menu extends Component{
 
     register(email, passwoard, username){
         auth.createUserWithEmailAndPassword(email, passwoard)
-        .then(() => {
-            
-            alert('Te has registrado correctamente, ahora inicia sesión')
+        .then((user) => {
+            user.updateProfile({
+                displayName: username
+            }).then(() => {
+                alert('Te has registrado correctamente, ahora inicia sesión')
+            })
+            .catch(error => {
+                alert(error)
+            })
         })
         .catch(error => {
             alert(error)
@@ -34,7 +40,7 @@ class Menu extends Component{
     }
     login(email, passwoard){
         auth.signInWithEmailAndPassword(email, passwoard)
-        .then((response) => {
+        .then(() => {
             this.setState({
                 logIn: true
             })
