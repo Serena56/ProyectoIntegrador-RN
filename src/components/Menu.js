@@ -21,22 +21,29 @@ class Menu extends Component{
             perimission: false,
             }
     }
-
+    componentDidMount(){
+        auth.onAuthStateChanged(
+            user =>{
+                console.log(user)
+                if(user){
+                    this.setState({
+                        login: true,
+                        userData: user
+                    })
+                }
+            }
+        )
+    }
     register(email, passwoard, usuario){
         auth.createUserWithEmailAndPassword(email, passwoard)
         .then((response) => {
             response.user.updateProfile({
                 displayName: usuario,
             })
-            .then(() => {
-                alert('Te has registrado correctamente, ahora inicia sesión')
-            })
-            .catch(error => {
-                alert(error)
-            })
+            alert('Te has registrado correctamente, ahora inicia sesión')
         })
         .catch(error => {
-            alert(error)
+            console.log(error)
         })
     }
     login(email, passwoard){
@@ -73,7 +80,7 @@ class Menu extends Component{
                 :
                 <Drawer.Navigator>
                     <Drawer.Screen name="Iniciar sesión" component={() => <Login  login={(email, passwoard) => this.login(email, passwoard)} />}/>
-                    <Drawer.Screen name="Registro" component={() => <Register register={(email, passwoard,usuario) => this.register(email, passwoard, usuario)}/>} />
+                    <Drawer.Screen name="Registro" component={() => <Register register={(email, passwoard,username) => this.register(email, passwoard, username)}/>} />
                 </Drawer.Navigator>
             }
             </NavigationContainer>
