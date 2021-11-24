@@ -8,15 +8,16 @@ import {
 } from 'react-native'
 
 class Register extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state ={
-            username: '',
+            displayName: '',
             email: '',
             passwoard: '',
             errorField: false,
         }
     }
+    
     render(){
         return(
             <View>
@@ -24,7 +25,7 @@ class Register extends Component{
                     style={styles.form}
                     keyboardType='default'
                     placeholder='nombre de usuario'
-                    onChangeText={ text => this.setState({username: text})}
+                    onChangeText={ text => this.setState({displayName: text})}
                 />
                 <TextInput 
                     style={styles.form}
@@ -40,7 +41,7 @@ class Register extends Component{
                     onChangeText={text => this.setState({passwoard: text})}
                 />
                 
-                <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" || this.state.username === ""? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" || this.state.username === "" ? true: false} onPress={() => this.props.register(this.state.email, this.state.passwoard, this.state.username)}><Text>Enviar</Text></TouchableOpacity>
+                <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" || this.state.displayName === ""? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" || this.state.displayName === "" ? true: false} onPress={() => this.props.register(this.state.email, this.state.passwoard, this.state.displayName)}><Text>Enviar</Text></TouchableOpacity>
             </View>
         )
     }

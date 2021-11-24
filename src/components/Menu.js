@@ -22,12 +22,13 @@ class Menu extends Component{
             }
     }
 
-    register(email, passwoard, username){
+    register(email, passwoard, usuario){
         auth.createUserWithEmailAndPassword(email, passwoard)
-        .then((user) => {
-            user.updateProfile({
-                displayName: username
-            }).then(() => {
+        .then((response) => {
+            response.user.updateProfile({
+                displayName: usuario,
+            })
+            .then(() => {
                 alert('Te has registrado correctamente, ahora inicia sesión')
             })
             .catch(error => {
@@ -40,9 +41,9 @@ class Menu extends Component{
     }
     login(email, passwoard){
         auth.signInWithEmailAndPassword(email, passwoard)
-        .then(() => {
+        .then( () => {
             this.setState({
-                logIn: true
+                logIn: true,
             })
             alert('Iniciaste sesión correctamente')
         })
@@ -53,6 +54,7 @@ class Menu extends Component{
             .then( () => {
                 this.setState({
                     logIn: false,
+                 
                 })
             })
             .catch()
@@ -66,12 +68,12 @@ class Menu extends Component{
                 <Drawer.Navigator>
                     <Drawer.Screen name="Inicio" component={() => <Home posteos={this.state.posteos} />}/>
                     <Drawer.Screen name="Crear Posteo" component={() => <NewPost navigation={Drawer} />}/>
-                    <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()}/>}/>
+                    <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()} />}/>
                 </Drawer.Navigator>
                 :
                 <Drawer.Navigator>
                     <Drawer.Screen name="Iniciar sesión" component={() => <Login  login={(email, passwoard) => this.login(email, passwoard)} />}/>
-                    <Drawer.Screen name="Registro" component={() => <Register register={(email, passwoard) => this.register(email, passwoard)}/>} />
+                    <Drawer.Screen name="Registro" component={() => <Register register={(email, passwoard,usuario) => this.register(email, passwoard, usuario)}/>} />
                 </Drawer.Navigator>
             }
             </NavigationContainer>
@@ -83,4 +85,4 @@ class Menu extends Component{
 
 
 
-export default Menu
+export default Menu;
