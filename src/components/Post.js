@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, FlatList, Modal} from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { db, auth } from '../firebase/Config';
 import firebase from "firebase";
 
@@ -10,7 +10,8 @@ class Post extends React.Component {
         this.state = {
             likes: 0,
             myLike: false,
-            showModal: false
+            showModal: false,
+            comment: ''
         }
     }
 
@@ -53,17 +54,40 @@ class Post extends React.Component {
     showModal() {
         this.setState({
             showModal: true
+        }),
+        console.log(this.props.comments)
+    }
+
+    closeModal() {
+        this.setState({
+            showModal: false
         })
     }
+    
     eliminar(){
         db.collection('posts').doc(this.props.dataId).delete()
             .then()
             .catch(e => console.log(e))
     }
     
+    publicarComentario() {
+        let oneComment = {
+            author: auth.currentUser.email,
+            createdAt: Date.now(),
+            commentText: this.state.comment,
+        }
+        db.collection('posts').doc(this.props.dataId).update({
+            comments: firebase.firestore.FieldValue.arrayUnion(oneComment)
+        })
+        .then(()=> {
+            this.setState({
+                comment: ''
+            })
+        })
+        .catch(e=> console.log(e))
+    }
 
     render() {
-        console.log(this.props.likes)
         return(
             
             <View style={styles.contenedorMadre}>
@@ -107,15 +131,39 @@ class Post extends React.Component {
                             }
 
                             <TouchableOpacity onPress={()=> this.showModal()}>
-                                <Text styles={styles.commentsTextTitulo}>Comments: </Text>
+                                <Text styles={styles.commentsTextTitulo}>Ver Comentarios </Text>
                             </TouchableOpacity>
 
                            { this.state.showModal ?
-                                <Modal
-                                animationType='fade' transparent={false} visible={this.state.showModal}
-                                >
+                                <Modal style={styles.modalContainer}
+                                animationType='fade' transparent={false} visible={this.state.showModal} presentationStyle='formSheet'>
+                                
+                                    <TouchableOpacity onPress={()=> this.closeModal()}>
+                                    <Text style={styles.closeButton}>X</Text>
+                                    </TouchableOpacity>
 
-                                </Modal>
+                                    {
+                                        this.props.comments ?
+                                    
+                                    <FlatList 
+                                    data={this.props.comments}
+                                    keyExtractor={ item => item.createdAt.toString() }
+                                    renderItem={ ({item}) => <Text>{item.author}: {item.commentText}</Text>}
+                                    />
+                                    :
+                                    <Text></Text>
+                                    }
+
+                                    <View>
+                                        <TextInput keyboardType='default' placeholder="escribi tu comentario" 
+                                        onChangeText={(text)=> {this.setState({ comment: text })}} value={this.state.comment}/>
+                                            
+                                        <TouchableOpacity onPress={()=> this.publicarComentario()}>
+                                            <Text>Comentar</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                
+                                    </Modal>
                                 :
                                 <Text> No Modal</Text>
                             }
@@ -190,6 +238,24 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 300,
         border: '1px solid black'
+    },
+    modalContainer: {
+        maxWidth: '90%',
+        width: '20px%',
+        boderRadius: 4,
+        padding: 10,
+        alignSelf: 'center',
+        marginVertical: 10,
+        boxShadow: 'rgb(204 204 204) 0px 0px 12px 9px',
+        backgroundColor: 'white'
+    },
+    closeButton: {
+        backgroundColor: 'red',
+        color: 'white',
+        padding: 5,
+        borderRadius: 4,
+        margin: 5,
+        alignSelf: 'flex-end'
     }
 })
 
