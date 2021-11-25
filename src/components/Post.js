@@ -91,36 +91,19 @@ class Post extends React.Component {
         return(
             
             <View style={styles.contenedorMadre}>
-
-            {auth.currentUser.email == this.props.owner ?
-                <TouchableOpacity style={styles.botonEliminar} onPress={() => this.eliminar()}>
-                                <Text>Eliminar</Text>
-                </TouchableOpacity>
-                :
-                <Text></Text>
-                }
-
-            <View style={styles.contenedor}>
-                <Image source={this.props.imagen} style={styles.imgPost}/>
-
-                <View style={styles.contenedorPost}>
-                    
-                    <View style={styles.infoPost}>
-                    <Text>{this.props.owner}: </Text>
-
-                    
-
-                    <View style={styles.setRow}>
-                        <Text style={styles.textPost}>{this.props.description}</Text> 
-                        <Text style={styles.createdAt}>{this.props.createdAt.toString()}</Text>
-                    </View>
-                       
-                       <View style={styles.commentsContainer}>
-                            
+                <View style={styles.contenedor}>
+                    <Image source={this.props.imagen} style={styles.imgPost}/>
+                    <View style={styles.contenedorPost}>
+                        <View style={styles.infoPost}>
+                            <Text>{this.props.owner}: </Text>
+                            <View style={styles.setRow}>
+                                <Text style={styles.textPost}>{this.props.description}</Text> 
+                                <Text style={styles.createdAt}>{this.props.createdAt.toString()}</Text> 
+                            </View> 
+                            <View style={styles.commentsContainer}>
                             <Text>Likes: {this.state.likes}</Text>
                             {
                                 this.state.myLike ?
-
                                 <TouchableOpacity onPress={()=> this.unlike()}>
                                 <Text>Deslikear</Text>
                             </TouchableOpacity>
@@ -133,18 +116,15 @@ class Post extends React.Component {
                             <TouchableOpacity onPress={()=> this.showModal()}>
                                 <Text styles={styles.commentsTextTitulo}>Ver Comentarios </Text>
                             </TouchableOpacity>
-
+                            <View style={styles.setRow}>
                            { this.state.showModal ?
                                 <Modal style={styles.modalContainer}
                                 animationType='fade' transparent={false} visible={this.state.showModal} presentationStyle='formSheet'>
-                                
                                     <TouchableOpacity onPress={()=> this.closeModal()}>
                                     <Text style={styles.closeButton}>X</Text>
                                     </TouchableOpacity>
-
                                     {
                                         this.props.comments ?
-                                    
                                     <FlatList 
                                     data={this.props.comments}
                                     keyExtractor={ item => item.createdAt.toString() }
@@ -153,7 +133,6 @@ class Post extends React.Component {
                                     :
                                     <Text></Text>
                                     }
-
                                     <View>
                                         <TextInput keyboardType='default' placeholder="escribi tu comentario" 
                                         onChangeText={(text)=> {this.setState({ comment: text })}} value={this.state.comment}/>
@@ -165,8 +144,18 @@ class Post extends React.Component {
                                 
                                     </Modal>
                                 :
-                                <Text> No Modal</Text>
-                            }
+                                <Text></Text>
+                                }
+                                <View style={styles.viewBotonEliminar}>
+                                    {auth.currentUser.email == this.props.owner ?
+                                        <TouchableOpacity style={styles.botonEliminar} onPress={() => this.eliminar()}>
+                                                        <Text>Eliminar</Text>
+                                        </TouchableOpacity>
+                                        :
+                                        <Text></Text>
+                                    }
+                                    </View>
+                                    </View>
 
                             {/* <Text styles={styles.commentsTextTitulo}>Comments: </Text>
                             <FlatList 
@@ -176,11 +165,8 @@ class Post extends React.Component {
                                 />   */}
                        </View>
                     </View>
-                    
-
-                </View>
-
-            </View>
+                    </View>           
+                     </View>
 
             </View>
         )
@@ -216,17 +202,15 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     infoPost: {
-        height: '220px'
+        height: '420px',
+        justifyContent: 'center'
     },
     createdAt: {
-        alignItems: 'flex-end',
-        marginRight: 0,
-        marginLeft: 'auto',
-        marginBottom: 0,
-        marginTop: 5,
+        margin: 'auto'
     },
     setRow: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     commentsContainer: {
         marginTop: 5,
@@ -241,7 +225,7 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         maxWidth: '90%',
-        width: '20px%',
+        width: '50%',
         boderRadius: 4,
         padding: 10,
         alignSelf: 'center',
@@ -257,17 +241,21 @@ const styles = StyleSheet.create({
         margin: 5,
         alignSelf: 'flex-end'
     },
+    viewBotonEliminar: {
+        width: '100%'
+    },
     botonEliminar: {
         alignItems: 'center',
           backgroundColor: "red",
           color: "#fff",
           paddingHorizontal: 10,
           paddingVertical: 6,
-          width: '15%',
           textAlign: 'center',
           borderRadius: 4,
           border:1, 
           marginTop: 20,
+          width: '90%',
+          margin: 'auto'
     },
 })
 

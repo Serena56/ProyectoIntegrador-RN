@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Text, FlatList, View, StyleSheet } from 'react-native';
+import { Text, FlatList, View, StyleSheet, ScrollView} from 'react-native';
 import Post from '../Components/Post';
 import { auth, db } from '../firebase/Config';
 
@@ -34,8 +34,9 @@ class Home extends React.Component {
     return(
         <>
             {console.log(this.state.buscar)}
+            <ScrollView >
             <View style={styles.flatList}>
-                <FlatList 
+                <FlatList  
                 data={this.state.posteos}
                 keyExtractor={ item => item.id.toString() }
                 renderItem={ ({item}) => <Post dataId={item.id}
@@ -46,6 +47,7 @@ class Home extends React.Component {
                 />}
             />   
             </View>
+            </ScrollView>
 
         </>
     )

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, FlatList, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, View, FlatList, StyleSheet, ScrollView} from 'react-native';
 import { auth, db } from '../firebase/Config';
 import Post from '../components/Post';
 
@@ -45,24 +45,28 @@ class MyProfile extends Component {
               <Text>Cerrar sesión</Text>
            
             </TouchableOpacity>
-
-            {this.state.posteos.length !== 0 ? 
-           <FlatList 
-           style={styles.posteos}
-           data = {this.state.posteos}
-           keyExtractor = { item => item.id.toString()}
-           renderItem= {({item})=> <Post 
-           dataId={item.id}
-           description={item.data.description} 
-           owner={item.data.owner} createdAt={item.data.createdAt} 
-           comments={item.data.comments} likes={item.data.likes} 
-           imagen={item.data.photo}    
-           />}
-          />
+          
             
-          :
-          <Text> No has hecho posteos </Text>
-           }
+            {this.state.posteos.length !== 0 ? 
+            <ScrollView >
+            <View style={styles.flaTList}>
+              <FlatList 
+              style={styles.posteos}
+              data = {this.state.posteos}
+              keyExtractor = { item => item.id.toString()}
+              renderItem= {({item})=> <Post 
+              dataId={item.id}
+              description={item.data.description} 
+              owner={item.data.owner} createdAt={item.data.createdAt} 
+              comments={item.data.comments} likes={item.data.likes} 
+              imagen={item.data.photo}    
+              />}
+              />
+              </View>
+            </ScrollView>
+            :
+            <Text> No has hecho posteos </Text>
+            }
             
           </View>
           
@@ -90,7 +94,7 @@ class MyProfile extends Component {
             fontFamily:"sans-serif",
             textDecorationLine: "underline",
             marginTop: 15,
-          },
+        },
           containerStyle: {
             backgroundColor: 'white',
             padding: 15,
@@ -105,6 +109,7 @@ class MyProfile extends Component {
           posteos: {
             padding: 20,
           },
+          
   })
 
 
