@@ -16,9 +16,8 @@ class Buscador extends Component{
         buscar: '',
         posteos: ''
       }
-    }
+  }
   render(){
-
     return(
       <View>
         <Text>Busca tus usuarios aca</Text>
