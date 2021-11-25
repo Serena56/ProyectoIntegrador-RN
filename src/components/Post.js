@@ -9,7 +9,8 @@ class Post extends React.Component {
         super();
         this.state = {
             likes: 0,
-            myLike: false
+            myLike: false,
+            showModal: false
         }
     }
 
@@ -49,6 +50,12 @@ class Post extends React.Component {
         .catch(e=> console.log(e))
     }
 
+    showModal() {
+        this.setState({
+            showModal: true
+        })
+    }
+
     render() {
         console.log(this.props.likes)
         return(
@@ -72,12 +79,7 @@ class Post extends React.Component {
                     </View>
                        
                        <View style={styles.commentsContainer}>
-                            <Text styles={styles.commentsTextTitulo}>Comments: </Text>
-                            <FlatList 
-                                data={this.props.comments}
-                                keyExtractor={ item => item.toString() }
-                                renderItem={ ({item}) => <Text>{item}</Text>}
-                                />  
+                            
                             <Text>Likes: {this.state.likes}</Text>
                             {
                                 this.state.myLike ?
@@ -90,6 +92,27 @@ class Post extends React.Component {
                                 <Text>Me Gusta</Text>
                             </TouchableOpacity>
                             }
+
+                            <TouchableOpacity onPress={()=> this.showModal()}>
+                                <Text styles={styles.commentsTextTitulo}>Comments: </Text>
+                            </TouchableOpacity>
+
+                           { this.state.showModal ?
+                                <Modal
+                                animationType='fade' transparent={false} visible={this.state.showModal}
+                                >
+
+                                </Modal>
+                                :
+                                <Text> No Modal</Text>
+                            }
+
+                            {/* <Text styles={styles.commentsTextTitulo}>Comments: </Text>
+                            <FlatList 
+                                data={this.props.comments}
+                                keyExtractor={ item => item.toString() }
+                                renderItem={ ({item}) => <Text>{item}</Text>}
+                                />   */}
                        </View>
                     </View>
                     
