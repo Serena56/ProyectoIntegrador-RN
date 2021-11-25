@@ -46,6 +46,7 @@ class Menu extends Component {
         })
         .catch(error => {
             this.diferentesErrores(error)
+            alert(error)
         })
     }
     login(email, passwoard){
@@ -58,6 +59,7 @@ class Menu extends Component {
         })
         .catch((error) => {
             this.diferentesErrores(error)
+            alert(error)
         })
     }
     diferentesErrores(error){
