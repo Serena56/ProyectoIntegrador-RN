@@ -37,8 +37,8 @@ class Menu extends Component{
     register(email, passwoard, usuario){
         auth.createUserWithEmailAndPassword(email, passwoard)
         .then((response) => {
-            response.user.updateProfile({
-                displayName: usuario,
+            response.userData.updateProfile({
+                displayName: usuario
             })
             alert('Te has registrado correctamente, ahora inicia sesión')
         })

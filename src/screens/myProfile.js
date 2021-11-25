@@ -3,10 +3,11 @@ import {Text, TouchableOpacity, View, FlatList, StyleSheet} from 'react-native';
 import { auth, db } from '../firebase/Config';
 import Post from '../components/Post';
 
-class MyProfile extends Component{
+
+class MyProfile extends Component {
     constructor(props){
       super(props);
-      this.state ={
+      this.state = {
         posteos: []
       }
     }
@@ -28,7 +29,7 @@ class MyProfile extends Component{
       )
   }
 
-    render(){
+    render() {
         return(
           <View>
             <Text>Mi Perfil</Text>
@@ -37,17 +38,18 @@ class MyProfile extends Component{
               <Text>Nombre:{auth.currentUser.displayName}</Text>
               <Text>Mail: {auth.currentUser.email}</Text>
               <Text>Último inicio de sesión: {auth.currentUser.metadata.lastSignInTime}</Text>
+              <Text>Cantidad de publicaciones: {this.state.posteos.length}</Text>
             </View>
             
-            <TouchableOpacity onPress={()=>this.props.logout()}>
+            <TouchableOpacity onPress= {()=>this.props.logout()} >
               <Text>Cerrar sesión</Text>
            
             </TouchableOpacity>
 
-            {this.state.posteos.length>0 ? 
+            {this.state.posteos.length !== 0 ? 
            <FlatList 
            data = {this.state.posteos}
-           keyExtractor = { item => item.id}
+           keyExtractor = { item => item.id.toString()}
            renderItem= {({item})=> <Post 
            dataId={item.id}
            description={item.data.description} 
