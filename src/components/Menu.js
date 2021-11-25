@@ -8,8 +8,10 @@ import { Camera } from 'expo-camera';
 import Login from "../screens/login";
 import Register from "../screens/register";
 import Home from "../screens/home";
-import NewPost from "../screens/newPost"
-import MyProfile from "../screens/myProfile"
+import Buscador from "../screens/buscador";
+import NewPost from "../screens/newPost";
+import MyProfile from "../screens/myProfile";
+// import Buscador from "../screens/buscador";
 
 const Drawer = createDrawerNavigator()
 
@@ -76,6 +78,7 @@ class Menu extends Component{
                     <Drawer.Screen name="Inicio" component={() => <Home posteos={this.state.posteos} />}/>
                     <Drawer.Screen name="Crear Posteo" component={() => <NewPost navigation={Drawer} />}/>
                     <Drawer.Screen name="Mi Perfil" component={() => <MyProfile logout={()=>this.logout()} />}/>
+                    <Drawer.Screen name="Búsqueda" component={()=> <Buscador/>}/>
                 </Drawer.Navigator>
                 :
                 <Drawer.Navigator>
