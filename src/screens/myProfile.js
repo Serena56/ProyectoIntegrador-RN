@@ -32,22 +32,23 @@ class MyProfile extends Component {
     render() {
         return(
           <View>
-            <Text>Mi Perfil</Text>
+            <Text style={styles.titulo} >Mi Perfil</Text>
     
             <View>
-              <Text>Nombre:{auth.currentUser.displayName}</Text>
-              <Text>Mail: {auth.currentUser.email}</Text>
-              <Text>Último inicio de sesión: {auth.currentUser.metadata.lastSignInTime}</Text>
-              <Text>Cantidad de publicaciones: {this.state.posteos.length}</Text>
+              <Text style={styles.data} >Nombre:{auth.currentUser.displayName}</Text>
+              <Text style={styles.data} >Mail: {auth.currentUser.email}</Text>
+              <Text style={styles.data} >Último inicio de sesión: {auth.currentUser.metadata.lastSignInTime}</Text>
+              <Text style={styles.data} >Cantidad de publicaciones: {this.state.posteos.length}</Text>
             </View>
             
-            <TouchableOpacity onPress= {()=>this.props.logout()} >
+            <TouchableOpacity style={styles.botonLogOut} onPress= {()=>this.props.logout()} >
               <Text>Cerrar sesión</Text>
            
             </TouchableOpacity>
 
             {this.state.posteos.length !== 0 ? 
            <FlatList 
+           style={styles.posteos}
            data = {this.state.posteos}
            keyExtractor = { item => item.id.toString()}
            renderItem= {({item})=> <Post 
@@ -68,6 +69,43 @@ class MyProfile extends Component {
         )
       }
     }
+
+    const styles = StyleSheet.create({
+      botonLogOut: {
+          alignItems: 'center',
+          backgroundColor: "grey",
+          color: "#fff",
+          paddingHorizontal: 10,
+          paddingVertical: 6,
+          width: '30%',
+          textAlign: 'center',
+          borderRadius: 4,
+          border:1, 
+          marginTop: 20,
+      },
+      titulo: {
+            color: 'black',
+            textAlign: 'center',
+            fontSize: 35,
+            fontFamily:"sans-serif",
+            textDecorationLine: "underline",
+            marginTop: 15,
+          },
+          containerStyle: {
+            backgroundColor: 'white',
+            padding: 15,
+          },
+          data: {
+            color: 'black',
+            textAlign: 'center',
+            fontSize: 20,
+            fontFamily:"sans-serif",
+            marginTop: 15,
+          },
+          posteos: {
+            padding: 20,
+          },
+  })
 
 
 export default MyProfile;

@@ -63,7 +63,7 @@ class Post extends React.Component {
             <View style={styles.contenedorMadre}>
 
             {auth.currentUser.email == this.props.owner ?
-                <TouchableOpacity onPress={() => this.eliminar()}>
+                <TouchableOpacity style={styles.botonEliminar} onPress={() => this.eliminar()}>
                                 <Text>Eliminar</Text>
                 </TouchableOpacity>
                 :
@@ -168,7 +168,19 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 300,
         border: '1px solid black'
-    }
+    },
+    botonEliminar: {
+        alignItems: 'center',
+          backgroundColor: "red",
+          color: "#fff",
+          paddingHorizontal: 10,
+          paddingVertical: 6,
+          width: '15%',
+          textAlign: 'center',
+          borderRadius: 4,
+          border:1, 
+          marginTop: 20,
+    },
 })
 
 
