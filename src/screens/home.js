@@ -8,7 +8,7 @@ class Home extends React.Component {
     constructor(){
         super()
         this.state = {
-            posteos: ''    
+            posteos: ''  
         }
     }
     componentDidMount(){
@@ -33,10 +33,9 @@ class Home extends React.Component {
     render(){
     return(
         <>
-    
-            {console.log(this.state.posteos)}
+            {console.log(this.state.buscar)}
             <View style={styles.flatList}>
-             <FlatList 
+                <FlatList 
                 data={this.state.posteos}
                 keyExtractor={ item => item.id.toString() }
                 renderItem={ ({item}) => <Post dataId={item.id}

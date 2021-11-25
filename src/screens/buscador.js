@@ -10,21 +10,39 @@ import {Text,
 
 
 class Buscador extends Component{
-    constructor(props){
-        super(props)
-        this.state={
-        
-        }
+  constructor(props){
+      super(props)
+      this.state={  
+        buscar: '',
+        posteos: ''
+      }
     }
-    render(){
+  render(){
 
-        return(
-            <View>
-         
+    return(
+      <View>
+        <Text>Busca tus usuarios aca</Text>
+        <TextInput 
+            style={styles.form}
+            keyboardType='default'
+            placeholder='Busque los posteos de sus usuarios favoritos'
+            onChange={text => this.setState({buscar: text})}
+        />
       </View>       
     )
   }
 }
 
+const styles = StyleSheet.create({
+  form:{
+      height: 20,
+      paddingVertical: 15,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 6,
+      margin: 10
+  }
+})
 
 export default Buscador;

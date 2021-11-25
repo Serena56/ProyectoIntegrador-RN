@@ -6,16 +6,16 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
-import MyProfile from "./myProfile";
 
 class Register extends Component{
     constructor(props){
         super(props)
         this.state ={
-            usuario: '',
+            displayName: '',
             email: '',
             passwoard: '',
             errorField: false,
+            mensaje: ''
         }
     }
     
@@ -27,7 +27,7 @@ class Register extends Component{
                     style={styles.form}
                     keyboardType='default'
                     placeholder='nombre de usuario'
-                    onChangeText={ text => this.setState({usuario: text})}
+                    onChangeText={ text => this.setState({displayName: text})}
                     
                 />
                 <TextInput 
@@ -45,7 +45,7 @@ class Register extends Component{
                 />
                 
                 
-                <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" || this.state.usuario === ""? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" || this.state.usuario === "" ? true: false} onPress={() => this.props.register(this.state.email, this.state.passwoard, this.state.usuario)}><Text>Enviar</Text></TouchableOpacity>
+                <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" || this.state.displayName === ""? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" || this.state.displayName === "" ? true: false} onPress={() => this.props.register(this.state.email, this.state.passwoard, this.state.displayName)}><Text>Enviar</Text></TouchableOpacity>
             </View>
         )
     }

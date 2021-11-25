@@ -15,6 +15,8 @@ class Login extends Component{
         this.state ={
             email: '',
             passwoard: '',
+            errorField: false,
+            mensaje: ''
         }
     }
     render(){
@@ -29,11 +31,12 @@ class Login extends Component{
                 <TextInput
                     style={styles.form}
                     keyboardType='default'
-                    placeholder='passwoard'
+                    placeholder='contraseña'
                     secureTextEntry={true}
                     onChangeText={text => this.setState({passwoard: text})}
                 />
                 <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" ? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" ? true: false} onPress={() => this.props.login(this.state.email, this.state.passwoard)} ><Text>Enviar</Text></TouchableOpacity>
+                <Text>{this.state.errorField ? this.state.mensaje: ''}</Text>
             </View>
         )
     }
