@@ -15,8 +15,8 @@ import MyProfile from "../screens/myProfile";
 
 const Drawer = createDrawerNavigator()
 
-class Menu extends Component{
-    constructor(){
+class Menu extends Component {
+    constructor() {
         super()
         this.state = {
             logIn: false,
