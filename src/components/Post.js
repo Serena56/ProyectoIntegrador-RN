@@ -55,13 +55,26 @@ class Post extends React.Component {
             showModal: true
         })
     }
+    eliminar(){
+        db.collection('posts').doc(this.props.dataId).delete()
+            .then()
+            .catch(e => console.log(e))
+    }
+    
 
     render() {
         console.log(this.props.likes)
         return(
             
             <View style={styles.contenedorMadre}>
-            
+
+            {auth.currentUser.email == this.props.owner ?
+                <TouchableOpacity onPress={() => this.eliminar()}>
+                                <Text>Eliminar</Text>
+                </TouchableOpacity>
+                :
+                <Text></Text>
+                }
 
             <View style={styles.contenedor}>
                 <Image source={this.props.imagen} style={styles.imgPost}/>

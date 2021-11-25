@@ -5,7 +5,6 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    Touchable
 } from 'react-native'
 
 
@@ -15,14 +14,12 @@ class Login extends Component{
         super()
         this.state ={
             email: '',
-            username: '',
-            passwoard: ''
+            passwoard: '',
         }
     }
     render(){
         return(
             <View>
-                <Text>Iniciar sesión</Text>
                 <TextInput
                     style={styles.form}
                     keyboardType='email-address'
@@ -36,7 +33,7 @@ class Login extends Component{
                     secureTextEntry={true}
                     onChangeText={text => this.setState({passwoard: text})}
                 />
-                <TouchableOpacity style={styles.botonEnviar} onPress={() => this.props.login(this.state.email, this.state.passwoard)} ><Text>Enviar</Text></TouchableOpacity>
+                <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" ? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" ? true: false} onPress={() => this.props.login(this.state.email, this.state.passwoard)} ><Text>Enviar</Text></TouchableOpacity>
             </View>
         )
     }
@@ -55,6 +52,17 @@ const styles = StyleSheet.create({
     botonEnviar: {
         alignItems: 'center',
         backgroundColor: "#28a745",
+        color: "#fff",
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        width: '20%',
+        textAlign: 'center',
+        borderRadius: 4,
+        border:1, 
+    },
+    botonNoEnviar: {
+        alignItems: 'center',
+        backgroundColor: "grey",
         color: "#fff",
         paddingHorizontal: 10,
         paddingVertical: 6,

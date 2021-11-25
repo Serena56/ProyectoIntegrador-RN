@@ -6,25 +6,29 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
+import MyProfile from "./myProfile";
 
 class Register extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state ={
-            username: '',
+            usuario: '',
             email: '',
-            passwoard: ''
+            passwoard: '',
+            errorField: false,
         }
     }
+    
     render(){
         return(
             <View>
-                <Text>Registrarse </Text>
+
                 <TextInput 
                     style={styles.form}
                     keyboardType='default'
                     placeholder='nombre de usuario'
-                    onChangeText={ text => this.setState({username: text})}
+                    onChangeText={ text => this.setState({usuario: text})}
+                    
                 />
                 <TextInput 
                     style={styles.form}
@@ -40,7 +44,8 @@ class Register extends Component{
                     onChangeText={text => this.setState({passwoard: text})}
                 />
                 
-                <TouchableOpacity style={styles.botonEnviar} onPress={() => this.props.register(this.state.email, this.state.passwoard, this.state.username)}><Text>Enviar</Text></TouchableOpacity>
+                
+                <TouchableOpacity style={this.state.email === "" || this.state.passwoard === "" || this.state.usuario === ""? styles.botonNoEnviar: styles.botonEnviar}  disabled={this.state.email === "" || this.state.passwoard === "" || this.state.usuario === "" ? true: false} onPress={() => this.props.register(this.state.email, this.state.passwoard, this.state.usuario)}><Text>Enviar</Text></TouchableOpacity>
             </View>
         )
     }
@@ -59,6 +64,17 @@ const styles = StyleSheet.create({
     botonEnviar: {
         alignItems: 'center',
         backgroundColor: "#28a745",
+        color: "#fff",
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        width: '20%',
+        textAlign: 'center',
+        borderRadius: 4,
+        border:1, 
+    },
+    botonNoEnviar: {
+        alignItems: 'center',
+        backgroundColor: "grey",
         color: "#fff",
         paddingHorizontal: 10,
         paddingVertical: 6,
