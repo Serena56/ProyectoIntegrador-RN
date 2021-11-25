@@ -39,13 +39,13 @@ class Menu extends Component {
     register(email, passwoard, usuario){
         auth.createUserWithEmailAndPassword(email, passwoard)
         .then((response) => {
-            response.userData.updateProfile({
-                displayName: usuario
+            response.user.updateProfile({
+                displayName: usuario,
             })
             alert('Te has registrado correctamente, ahora inicia sesión')
         })
         .catch(error => {
-            console.log(error)
+            this.diferentesErrores(error)
         })
     }
     login(email, passwoard){
@@ -56,8 +56,35 @@ class Menu extends Component {
             })
             alert('Iniciaste sesión correctamente')
         })
+        .catch((error) => {
+            this.diferentesErrores(error)
+        })
     }
-
+    diferentesErrores(error){
+        let mensaje=''
+        switch (error.code) {
+            case 'auth/invalid-email':
+                mensaje = 'El formato utilizado no es el correcto. Por favor, pruebe devuelta'
+                break;
+            case 'auth/wrong-passwoard':
+                mensaje = 'La contraseña no es la correcta. Pruebe devuelta o verifique si el mail es el correcto'
+                break;
+            case 'auth/email-already-in-use':
+                mensaje = 'Ese mail ya fue utilizado. Por favor, pruebe con otro'  
+                break;
+            case 'auth/weak-password':
+                mensaje = 'La contraseña no es segura. Por favor, pruebe con otra'
+            case 'auth/to-many-requests':
+                mensaje = 'Ha superado la cantidad de intentos permitidos, pruebe mas tarde'
+            default:
+                mensaje = 'Por favor pruebe nuevamente'
+                break;
+        }
+        this.setState({
+            errorForm: mensaje,
+            errorField: true
+        })
+    }
     logout(){
         auth.signOut()
             .then( () => {
